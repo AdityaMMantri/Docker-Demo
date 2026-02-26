@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Docker Flask Demo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Flask Docker Demo App</h1>
+
+    <form method="POST">
+        <h3>Square Calculator</h3>
+        <input type="number" name="number" placeholder="Enter number">
+        <button name="action" value="square">Calculate Square</button>
+    </form>
+
+    <form method="POST">
+        <h3>Sum Calculator</h3>
+        <input type="number" name="a" placeholder="A">
+        <input type="number" name="b" placeholder="B">
+        <button name="action" value="sum">Add</button>
+    </form>
+
+    {% if result %}
+        <div class="result">{{ result }}</div>
+    {% endif %}
+</div>
+
+</body>
+</html>
