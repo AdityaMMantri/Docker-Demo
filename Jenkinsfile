@@ -9,21 +9,23 @@ pipeline {
 
         stage('Build Image') {
             steps {
-                script {
-                    dockerImage = docker.build("${IMAGE_NAME}:${env.BUILD_NUMBER}")
-                }
+                bat "docker build -t %IMAGE_NAME%:%BUILD_NUMBER% ."
             }
         }
 
         stage('Push Image') {
             steps {
-                script {
-                    docker.withRegistry('', 'dockerhub-creds') {
-                        dockerImage.push()
-                    }
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    bat """
+                    docker login -u %DOCKER_USER% -p %DOCKER_PASS%
+                    docker push %IMAGE_NAME%:%BUILD_NUMBER%
+                    """
                 }
             }
         }
-
     }
 }
