@@ -1,15 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "adityammantri/flask-from-github"
-    }
-
     stages {
 
         stage('Build Image') {
             steps {
-                bat "docker build -t %IMAGE_NAME%:%BUILD_NUMBER% ."
+                bat "docker build -t flask-from-github:%BUILD_NUMBER% ."
             }
         }
 
@@ -21,8 +17,9 @@ pipeline {
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
                     bat """
+                    docker tag flask-from-github:%BUILD_NUMBER% %DOCKER_USER%/flask-from-github:%BUILD_NUMBER%
                     docker login -u %DOCKER_USER% -p %DOCKER_PASS%
-                    docker push %IMAGE_NAME%:%BUILD_NUMBER%
+                    docker push %DOCKER_USER%/flask-from-github:%BUILD_NUMBER%
                     """
                 }
             }
