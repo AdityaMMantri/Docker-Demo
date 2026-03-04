@@ -40,7 +40,7 @@ pipeline {
                     bat """
                     docker stop %CONTAINER_NAME% || echo not running
                     docker rm %CONTAINER_NAME% || echo not existing
-                    docker run -d --name %CONTAINER_NAME% -p 5000:5000 %DOCKER_USER%/%IMAGE_NAME%:%BUILD_NUMBER%
+                    docker run -d --name %CONTAINER_NAME% -p 7000:5000 %DOCKER_USER%/%IMAGE_NAME%:%BUILD_NUMBER%
                     """
                 }
             }
