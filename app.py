@@ -20,7 +20,7 @@ def home():
         elif action == "subtract":
             a = int(request.form.get("a", 0))
             b = int(request.form.get("b", 0))
-            result = f"Difference = {a-b}"
+            result = f"Difference = {b-a}"
 
     return render_template("index.html", result=result)
 
